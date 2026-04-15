@@ -47,7 +47,7 @@ AUR_HELPER="paru"
 section "Shorin Noctalia" "Core Components"
 log "Installing core shell components..."
 
-CORE_PKGS="noctalia-shell niri xwayland-satellite kitty xdg-desktop-portal-gnome niri-sidebar-git satty mpv polkit-gnome "
+CORE_PKGS="noctalia-shell niri-git xwayland-satellite kitty xdg-desktop-portal-gnome niri-sidebar-git satty mpv polkit-gnome "
 
 echo "$CORE_PKGS" >> "$VERIFY_LIST"
 exe as_user "$AUR_HELPER" -S --noconfirm --needed $CORE_PKGS
@@ -159,9 +159,6 @@ log "Hiding unnecessary .desktop icons..."
 run_hide_desktop_file
 log "Copying tutorial files..."
 force_copy "$PARENT_DIR/resources/必看-Shorin-Noctalia-Niri使用方法.txt" "$HOME_DIR"
-
-# niri blur toggle 脚本
-curl -L shorin.xyz/niri-blur-toggle | as_user bash
 
 # --- Finalization & Auto-Login ---
 section "Final" "Auto-Login & Cleanup"
