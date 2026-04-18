@@ -29,7 +29,7 @@ upscaler                                 # image upscaler (make it more clear)
 yazi                                     # great tui file manager
 flatseal                                 # flatpak permission manager 
 pavucontrol                              # sound config GUI
-
+mousepad                                 # a minimal notebook or so called "text editor"
 # --- AUR Packages ---
 AUR:flclash-bin                          # Sometimes a detour is necessary to solve a problem
 AUR:linuxqq-appimage                     # Tencent QQ (AppImage)
