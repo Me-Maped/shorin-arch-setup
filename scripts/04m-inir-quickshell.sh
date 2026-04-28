@@ -129,7 +129,7 @@ force_copy "$PARENT_DIR/quickshell-dotfiles/." "$HOME_DIR/"
 # ==============================================================================
 section "Config" "file manager"
 
-FM_PKGS="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal  xdg-terminal-exec file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract"
+FM_PKGS="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal  xdg-terminal-exec file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract python-pillow"
 echo "$FM_PKGS" >> "$VERIFY_LIST"
 exe as_user paru -S --noconfirm --needed $FM_PKGS
 # 默认终端处理

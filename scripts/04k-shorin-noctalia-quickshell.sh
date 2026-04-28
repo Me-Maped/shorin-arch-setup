@@ -70,7 +70,7 @@ force_copy "$WALLPAPER_SOURCE_DIR/." "$WALLPAPER_DIR/"
 # --- File Manager & Terminal Setup ---
 section "Shorin Noctalia" "File Manager & Terminal"
 log "Installing Nautilus, Thunar and dependencies..."
-FM_PKGS1="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract"
+FM_PKGS1="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract python-pillow"
 FM_PKGS2="xdg-desktop-portal-gtk thunar tumbler ffmpegthumbnailer poppler-glib gvfs-smb file-roller thunar-archive-plugin gnome-keyring thunar-volman gvfs-mtp gvfs-gphoto2 webp-pixbuf-loader libgsf"
 
 echo "$FM_PKGS1" >> "$VERIFY_LIST"

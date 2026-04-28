@@ -63,7 +63,7 @@ echo "$GNOME_BASE_PKGS" >> "$VERIFY_LIST"
 
 if exe as_user yay -S --noconfirm --needed --answerdiff=None --answerclean=None $GNOME_BASE_PKGS; then
     
-    GNOME_FM_PKGS="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract"
+    GNOME_FM_PKGS="ffmpegthumbnailer gvfs-smb nautilus-open-any-terminal file-roller gnome-keyring gst-plugins-base gst-plugins-good gst-libav nautilus icoextract python-pillow"
     echo "$GNOME_FM_PKGS" >> "$VERIFY_LIST"
     exe pacman -S --noconfirm --needed $GNOME_FM_PKGS
     
