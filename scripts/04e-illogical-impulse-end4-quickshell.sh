@@ -67,6 +67,8 @@ if [ -d "$SOURCE_DOTFILES" ]; then
     log "Deploying Quickshell dotfiles to $HOME_DIR/.config/..."
     chown -R "$TARGET_USER:" "$SOURCE_DOTFILES"
     as_user cp -rf "$SOURCE_DOTFILES/." "$HOME_DIR/"
+    # --- 万象语法模型 ---
+    as_user curl -Lo ~/.local/share/fcitx5/rime/wanxing-lts-zh-hans.gram --create-dirs  https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram 2>/dev/null || true
 else
     warn "Source directory not found: $SOURCE_DOTFILES"
     warn "Skipping dotfiles copy."

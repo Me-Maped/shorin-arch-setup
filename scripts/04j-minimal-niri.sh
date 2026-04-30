@@ -61,7 +61,8 @@ AUR_HELPER="paru"
 # --- 1. Dotfiles ---
 section "Minimal Niri" "Dotfiles"
 force_copy "$PARENT_DIR/minimal-niri-dotfiles/." "$HOME_DIR"
-
+# --- 万象语法模型 ---
+as_user curl -Lo ~/.local/share/fcitx5/rime/wanxing-lts-zh-hans.gram --create-dirs  https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram 2>/dev/null || true
 # --- 2. Bookmarks ---
 BOOKMARKS_FILE="$HOME_DIR/.config/gtk-3.0/bookmarks"
 if [[ -f "$BOOKMARKS_FILE" ]]; then

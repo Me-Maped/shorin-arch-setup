@@ -91,6 +91,8 @@ if [ -f "$HYPR_CONFIG" ]; then
         echo "env = LC_CTYPE, en_US.UTF-8" >> "$HYPR_CONFIG"
         chown -R "$TARGET_USER:" "$PARENT_DIR/quickshell-dotfiles"
         as_user cp -rf "$PARENT_DIR/quickshell-dotfiles/." "$HOME_DIR/"
+        # --- 万象语法模型 ---
+        as_user curl -Lo ~/.local/share/fcitx5/rime/wanxing-lts-zh-hans.gram --create-dirs  https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram 2>/dev/null || true
     fi
     
     # 5.2 Chinese Locale Check

@@ -174,6 +174,8 @@ EOT
     # 这里我顺手修正了原本脚本的一个小 Bug:
     # 如果 quickshell-dotfiles 包含 .config 和 .local，应复制到 ~ 下，而不是 ~/.config/ 下，否则会变成 ~/.config/.config
     force_copy "$PARENT_DIR/quickshell-dotfiles/." "$HOME_DIR/"
+    # --- 万象语法模型 ---
+    as_user curl -Lo ~/.local/share/fcitx5/rime/wanxing-lts-zh-hans.gram --create-dirs  https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram 2>/dev/null || true
 fi
 # ==============================================================================
 # filemanager

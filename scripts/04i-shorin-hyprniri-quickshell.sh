@@ -141,7 +141,8 @@ WALLPAPER_DIR="$HOME_DIR/Pictures/Wallpapers"
 chown -R "$TARGET_USER:" "$WALLPAPER_SOURCE_DIR"
 as_user mkdir -p "$WALLPAPER_DIR"
 force_copy "$WALLPAPER_SOURCE_DIR/." "$WALLPAPER_DIR/"
-
+# --- 万象语法模型 ---
+as_user curl -Lo ~/.local/share/fcitx5/rime/wanxing-lts-zh-hans.gram --create-dirs  https://github.com/amzxyz/RIME-LMDG/releases/download/LTS/wanxiang-lts-zh-hans.gram 2>/dev/null || true
 # --- Browser Setup ---
 section "Shorin Hyprniri" "Browser Setup"
 
