@@ -167,6 +167,7 @@ select_desktop() {
 select_optional_modules() {
     local OPTIONAL_MENU=(
         "IWD WiFi Backend|01b-nm-backend.sh"
+        "Shorin Arch Repository|01c-shorin-arch.sh"
         "Windows Linux Dualboot Setup|02a-dualboot-fix.sh"
         "Hardware Drivers|03b-gpu-driver.sh"
         "Grub Themes|07-grub-theme.sh"
