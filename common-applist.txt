@@ -31,6 +31,7 @@ flatseal                                 # flatpak permission manager
 pavucontrol                              # sound config GUI
 mousepad                                 # a minimal notebook or so called "text editor"
 flclash                                  # Sometimes a detour is necessary to solve a problem
+easyeffects				 # Audio Effects for PipeWire
 # --- AUR Packages ---
 AUR:linuxqq-appimage                     # Tencent QQ (AppImage)
 AUR:wechat-appimage                      # WeChat (AppImage)
@@ -39,7 +40,4 @@ AUR:mangojuice-bin                       # GUI for mangohud
 AUR:video-downloader                     # Download youtube or bilibili videos (based on yt-dlp)
 AUR:visual-studio-code-bin               # vscode 
 AUR:pins-git			                 # Manage .desktop
-
-# --- Flatpak Packages ---       
-flatpak:com.github.wwmm.easyeffects      # Audio Effects for PipeWire 
-flatpak:it.mijorus.gearlever             # AppImage Manager
+AUR:gearlever				 # AppImage Manager
