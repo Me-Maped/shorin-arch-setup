@@ -34,14 +34,14 @@ fi
 if pacman-key --list-keys "$KEY_FPR" >/dev/null 2>&1; then
     success "GPG key already present."
 else
-    log "Downloading and importing GPG key..."
-    if curl -sL --max-time 15 "https://repo.shorin.xyz/archlinux/shorin-arch.pub" | pacman-key --add - 2>/dev/null; then
+    log "Receiving GPG key from keyserver..."
+    if pacman-key --keyserver hkp://keys.openpgp.org --recv-keys "$KEY_FPR" 2>/dev/null; then
         pacman-key --lsign-key "$KEY_FPR" >/dev/null 2>&1
-        success "GPG key imported and signed."
+        success "GPG key received and signed."
     else
-        warn "Failed to download GPG key from repo.shorin.xyz."
+        warn "Failed to receive GPG key from keyserver."
         warn "You can manually import it later:"
-        warn "  curl -sL https://repo.shorin.xyz/archlinux/shorin-arch.pub | sudo pacman-key --add -"
+        warn "  sudo pacman-key --keyserver hkp://keys.openpgp.org --recv-keys $KEY_FPR"
         warn "  sudo pacman-key --lsign-key $KEY_FPR"
     fi
 fi
