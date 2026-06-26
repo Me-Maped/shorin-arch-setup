@@ -96,7 +96,9 @@ fi
 # STEP 3: Initialize Dotfiles & Environment
 # ==============================================================================
 log "Initializing User Dotfiles and Environment..."
-exe as_user shorindms init
+if ! exe as_user shorindms init; then
+    critical_failure_handler "shorindms initialization failed. Aborting installer."
+fi
 
 # ==============================================================================
 # STEP 4: Static Resources

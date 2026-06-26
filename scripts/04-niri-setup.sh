@@ -69,7 +69,9 @@ fi
 
 # 2. 调用 CLI 脚本完成初始化
 log "Running shorinniri initialization..."
-exe as_user shorinniri init
+if ! exe as_user shorinniri init; then
+    critical_failure_handler "shorinniri initialization failed. Aborting installer."
+fi
 
 # ==============================================================================
 # STEP 2: Deploy Static Resources
