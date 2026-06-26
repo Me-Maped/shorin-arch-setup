@@ -36,8 +36,12 @@ trap cleanup_sudo EXIT INT TERM
 # ==============================================================================
 # 1. 安装你的专属硬件检测工具
 # ==============================================================================
-log "Installing chwd-arch-git from AUR..."
-exe as_user yay -S --noconfirm --needed --answerdiff=None --answerclean=None chwd-arch-git
+if command -v chwd >/dev/null 2>&1; then
+    log "chwd command already exists, skipping installation."
+else
+    log "Installing chwd-arch-git from AUR..."
+    exe as_user yay -S --noconfirm --needed --answerdiff=None --answerclean=None chwd-arch-git
+fi
 
 # ==============================================================================
 # 2. 自动检测并安装驱动
