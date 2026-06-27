@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# Script: 02a-dualboot-fix.sh
+# Script: 02c-dualboot-fix.sh
 # Purpose: Auto-configure for Windows dual-boot (OS-Prober only).
 # ==============================================================================
 
@@ -39,7 +39,7 @@ set_grub_value() {
 
 # --- Main Script ---
 
-section "Phase 2A" "Dual-Boot Configuration (Windows)"
+section "Phase 2C" "Dual-Boot Configuration (Windows)"
 
 # ------------------------------------------------------------------------------
 # 1. Detect Windows
@@ -55,7 +55,7 @@ WINDOWS_DETECTED=$(os-prober | grep -qi "windows" && echo "true" || echo "false"
 if [ "$WINDOWS_DETECTED" != "true" ]; then
     log "No Windows installation detected by os-prober."
     log "Skipping dual-boot specific configurations."
-    log "Module 02a completed (Skipped)."
+    log "Module 02c completed (Skipped)."
     exit 0
 fi
 
@@ -88,4 +88,4 @@ else
     error "Failed to regenerate GRUB configuration."
 fi
 
-log "Module 02a completed."
+log "Module 02c completed."

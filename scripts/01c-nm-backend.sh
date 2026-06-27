@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# 01b-nm-backend.sh - Network Backend Configuration
+# 01c-nm-backend.sh - Network Backend Configuration
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

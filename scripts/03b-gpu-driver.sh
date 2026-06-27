@@ -16,8 +16,12 @@ check_root
 
 section "Phase 2b" "GPU Driver Setup"
 
-DETECTED_USER=$(awk -F: '$3 == 1000 {print $1}' /etc/passwd)
-TARGET_USER="${DETECTED_USER:-$(read -p "Target user: " u && echo $u)}"
+detect_target_user
+
+if [[ -z "$TARGET_USER" ]] || ! id "$TARGET_USER" &>/dev/null; then
+    error "Target user is missing. Run 02a-user.sh before 03b-gpu-driver.sh."
+    exit 1
+fi
 
 #--------------sudo temp file--------------------#
 SUDO_TEMP_FILE="/etc/sudoers.d/99_shorin_installer_temp"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# 03-user.sh - User Account & Environment Setup (Compatible with detect_target_user)
+# 02a-user.sh - User Account & Environment Setup (Compatible with detect_target_user)
 # ==============================================================================
 
 # 1. 加载工具集
@@ -15,7 +15,7 @@ check_root
 # ==============================================================================
 # Phase 1: 用户识别与账户同步
 # ==============================================================================
-section "Phase 3" "User Account Setup"
+section "Phase 2A" "User Account Setup"
 
 
 # 清理缓存

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# 01c-shorin-arch.sh - Configure Shorin Arch Repository
+# 01b-shorin-arch.sh - Configure Shorin Arch Repository
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -52,4 +52,4 @@ fi
 exe pacman -Sy
 success "Shorin Arch repository configured."
 
-log "Module 01c completed."
+log "Module 01b completed."

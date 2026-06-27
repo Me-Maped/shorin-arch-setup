@@ -28,12 +28,11 @@ trap 'echo -e "\n   ${H_YELLOW}>>> Operation cancelled by user (Ctrl+C). Skippin
 section "Phase 5" "Common Applications"
 
 log "Identifying target user..."
-DETECTED_USER=$(awk -F: '$3 == 1000 {print $1}' /etc/passwd)
+detect_target_user
 
-if [ -n "$DETECTED_USER" ]; then
-    TARGET_USER="$DETECTED_USER"
-else
-    read -p "   Please enter the target username: " TARGET_USER
+if [[ -z "$TARGET_USER" ]] || ! id "$TARGET_USER" &>/dev/null; then
+    error "Target user is missing. Run 02a-user.sh before 99-apps.sh."
+    exit 1
 fi
 HOME_DIR="/home/$TARGET_USER"
 info_kv "Target" "$TARGET_USER"

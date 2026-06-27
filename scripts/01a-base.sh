@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# 01-base.sh - Base System Configuration
+# 01a-base.sh - Base System Configuration
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -86,10 +86,45 @@ log "Restarting systemd-vconsole-setup..."
 exe systemctl restart systemd-vconsole-setup
 
 success "TTY font configured (ter-v28n)."
+
 # ------------------------------------------------------------------------------
-# 4. Configure archlinuxcn Repository
+# 4. Locale
 # ------------------------------------------------------------------------------
-section "Step 4/6" "ArchLinuxCN Repository"
+section "Step 4/6" "Locale Configuration"
+
+NEED_GENERATE=false
+
+if locale -a | grep -iq "en_US.utf8"; then
+    success "English locale (en_US.UTF-8) is active."
+else
+    log "Enabling en_US.UTF-8..."
+    sed -i 's/^#\s*en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    NEED_GENERATE=true
+fi
+
+if locale -a | grep -iq "zh_CN.utf8"; then
+    success "Chinese locale (zh_CN.UTF-8) is active."
+else
+    log "Enabling zh_CN.UTF-8..."
+    sed -i 's/^#\s*zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
+    NEED_GENERATE=true
+fi
+
+if [ "$NEED_GENERATE" = true ]; then
+    log "Generating locales (this may take a moment)..."
+    if exe locale-gen; then
+        success "Locales generated successfully."
+    else
+        error "Locale generation failed."
+    fi
+else
+    success "All locales are already up to date."
+fi
+
+# ------------------------------------------------------------------------------
+# 5. Configure archlinuxcn Repository
+# ------------------------------------------------------------------------------
+section "Step 5/6" "ArchLinuxCN Repository"
 
 if grep -q "\[archlinuxcn\]" /etc/pacman.conf; then
     success "archlinuxcn repository already exists."
@@ -131,9 +166,9 @@ log "Installing archlinuxcn-keyring..."
 exe pacman -Syu --noconfirm archlinuxcn-keyring
 success "ArchLinuxCN configured."
 # ------------------------------------------------------------------------------
-# 5. Install AUR Helpers
+# 6. Install AUR Helpers
 # ------------------------------------------------------------------------------
-section "Step 5/6" "AUR Helpers"
+section "Step 6/6" "AUR Helpers"
 
 log "Installing yay and paru..."
 exe pacman -S --noconfirm --needed base-devel yay paru

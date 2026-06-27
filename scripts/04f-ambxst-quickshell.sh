@@ -16,9 +16,12 @@ check_root
 #  Identify User & DM Check
 # ==============================================================================
 log "Identifying user..."
-DETECTED_USER=$(awk -F: '$3 == 1000 {print $1}' /etc/passwd)
-TARGET_USER="${DETECTED_USER:-$(read -p "Target user: " u && echo $u)}"
-HOME_DIR="/home/$TARGET_USER"
+detect_target_user
+
+if [[ -z "$TARGET_USER" ]] || ! id "$TARGET_USER" &>/dev/null; then
+    error "Target user is missing. Run 02a-user.sh before 04f-ambxst-quickshell.sh."
+    exit 1
+fi
 info_kv "Target" "$TARGET_USER"
 
 # DM Check

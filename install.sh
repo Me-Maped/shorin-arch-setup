@@ -166,9 +166,9 @@ select_desktop() {
 # --- Optional Modules Selection Menu (FZF Powered) ---
 select_optional_modules() {
     local OPTIONAL_MENU=(
-        "IWD WiFi Backend|01b-nm-backend.sh"
-        "Shorin Arch Repository|01c-shorin-arch.sh"
-        "Windows Linux Dualboot Setup|02a-dualboot-fix.sh"
+        "IWD WiFi Backend|01c-nm-backend.sh"
+        "Shorin Arch Repository|01b-shorin-arch.sh"
+        "Windows Linux Dualboot Setup|02c-dualboot-fix.sh"
         "Hardware Drivers|03b-gpu-driver.sh"
         "Grub Themes|07-grub-theme.sh"
         "Common Apps|99-apps.sh"
@@ -262,8 +262,8 @@ sys_dashboard
 MANDATORY_MODULES=(
     "00-btrfs-init.sh"
     "01a-base.sh"
-    "02-musthave.sh"
-    "03a-user.sh"
+    "02a-user.sh"
+    "02b-musthave.sh"
     "03c-snapshot-before-desktop.sh"
     "05-verify-desktop.sh"
 )
@@ -287,9 +287,24 @@ case "$DESKTOP_ENV" in
     *)             warn "Unknown selection, skipping desktop setup." ;;
 esac
 
-mapfile -t MODULES < <(printf "%s\n" "${ALL_MODULES[@]}" | sort -u)
-
 if [ ! -f "$STATE_FILE" ]; then touch "$STATE_FILE"; fi
+
+migrate_progress_entry() {
+    local old_name="$1"
+    local new_name="$2"
+
+    if grep -q "^${old_name}$" "$STATE_FILE"; then
+        sed -i "s/^${old_name}$/${new_name}/" "$STATE_FILE"
+    fi
+}
+
+migrate_progress_entry "01b-nm-backend.sh" "01c-nm-backend.sh"
+migrate_progress_entry "01c-shorin-arch.sh" "01b-shorin-arch.sh"
+migrate_progress_entry "02a-dualboot-fix.sh" "02c-dualboot-fix.sh"
+migrate_progress_entry "02-musthave.sh" "02b-musthave.sh"
+migrate_progress_entry "03a-user.sh" "02a-user.sh"
+
+mapfile -t MODULES < <(printf "%s\n" "${ALL_MODULES[@]}" | sort -u)
 
 TOTAL_STEPS=${#MODULES[@]}
 CURRENT_STEP=0
@@ -534,9 +549,7 @@ exe pacman -Sc --noconfirm
 clean_intermediate_snapshots "root"
 clean_intermediate_snapshots "home"
 
-DETECTED_USER=$(awk -F: '$3 == 1000 {print $1}' /etc/passwd)
-TARGET_USER="${DETECTED_USER:-$(read -p "Target user: " u && echo $u)}"
-HOME_DIR="/home/$TARGET_USER"
+detect_target_user
 
 for dir in /var/cache/pacman/pkg/download-*/; do
     if [ -d "$dir" ]; then

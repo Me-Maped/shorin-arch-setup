@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# 02-musthave.sh - Essential Software, Drivers & Locale
+# 02b-musthave.sh - Essential Software & Drivers
 # ==============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,6 +10,13 @@ source "$SCRIPT_DIR/00-utils.sh"
 check_root
 
 log ">>> Starting Phase 2: Essential (Must-have) Software & Drivers"
+
+detect_target_user
+
+if [[ -z "$TARGET_USER" ]] || ! id "$TARGET_USER" &>/dev/null; then
+    error "Target user is missing. Run 02a-user.sh before 02b-musthave.sh."
+    exit 1
+fi
 
 SUDO_TEMP_FILE="/etc/sudoers.d/99_shorin_installer_temp"
 echo "$TARGET_USER ALL=(ALL) NOPASSWD: ALL" >"$SUDO_TEMP_FILE"
@@ -21,7 +28,7 @@ trap cleanup_sudo EXIT INT TERM
 # ------------------------------------------------------------------------------
 # 1. Btrfs Assistants & GRUB Snapshot Integration
 # ------------------------------------------------------------------------------
-section "Step 1/9" "Btrfs Snapshot Integration"
+section "Step 1/8" "Btrfs Snapshot Integration"
 
 ROOT_FSTYPE=$(findmnt -n -o FSTYPE /)
 if [ "$ROOT_FSTYPE" == "btrfs" ]; then
@@ -78,7 +85,7 @@ fi
 # ------------------------------------------------------------------------------
 # 2. Audio & Video
 # ------------------------------------------------------------------------------
-section "Step 2/9" "Audio & Video"
+section "Step 2/8" "Audio & Video"
 
 log "Installing firmware..."
 exe pacman -S --noconfirm --needed sof-firmware alsa-ucm-conf alsa-firmware
@@ -90,58 +97,18 @@ exe systemctl --global enable pipewire pipewire-pulse wireplumber
 success "Audio setup complete."
 
 # ------------------------------------------------------------------------------
-# 3. Locale
+# 3. Input Method
 # ------------------------------------------------------------------------------
-section "Step 3/9" "Locale Configuration"
-
-# 标记是否需要重新生成
-NEED_GENERATE=false
-
-# --- 1. 检测 en_US.UTF-8 ---
-if locale -a | grep -iq "en_US.utf8"; then
-    success "English locale (en_US.UTF-8) is active."
-else
-    log "Enabling en_US.UTF-8..."
-    # 使用 sed 取消注释
-    sed -i 's/^#\s*en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-    NEED_GENERATE=true
-fi
-
-# --- 2. 检测 zh_CN.UTF-8 ---
-if locale -a | grep -iq "zh_CN.utf8"; then
-    success "Chinese locale (zh_CN.UTF-8) is active."
-else
-    log "Enabling zh_CN.UTF-8..."
-    # 使用 sed 取消注释
-    sed -i 's/^#\s*zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen
-    NEED_GENERATE=true
-fi
-
-# --- 3. 如果有修改，统一执行生成 ---
-if [ "$NEED_GENERATE" = true ]; then
-    log "Generating locales (this may take a moment)..."
-    if exe locale-gen; then
-        success "Locales generated successfully."
-    else
-        error "Locale generation failed."
-    fi
-else
-    success "All locales are already up to date."
-fi
-
-# ------------------------------------------------------------------------------
-# 4. Input Method
-# ------------------------------------------------------------------------------
-section "Step 4/9" "Input Method (Fcitx5)"
+section "Step 3/8" "Input Method (Fcitx5)"
 
 exe as_user yay -S --noconfirm --needed fcitx5-shorin-patched-git fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-rime rime-ice-git 
 
 success "Fcitx5 installed."
 
 # ------------------------------------------------------------------------------
-# 5. Bluetooth (Smart Detection)
+# 4. Bluetooth (Smart Detection)
 # ------------------------------------------------------------------------------
-section "Step 5/9" "Bluetooth"
+section "Step 4/8" "Bluetooth"
 
 # Ensure detection tools are present
 log "Detecting Bluetooth hardware..."
@@ -170,26 +137,26 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# 6. Power
+# 5. Power
 # ------------------------------------------------------------------------------
-section "Step 6/9" "Power Management"
+section "Step 5/8" "Power Management"
 
 exe pacman -S --noconfirm --needed power-profiles-daemon
 exe systemctl enable --now power-profiles-daemon
 success "Power profiles daemon enabled."
 
 # ------------------------------------------------------------------------------
-# 7. Fastfetch
+# 6. Fastfetch
 # ------------------------------------------------------------------------------
-section "Step 7/9" "Fastfetch"
+section "Step 6/8" "Fastfetch"
 
 exe pacman -S --noconfirm --needed fastfetch gdu btop cmatrix lolcat sl
 success "Fastfetch installed."
 
 # ------------------------------------------------------------------------------
-# 8. Pacman UI
+# 7. Pacman UI
 # ------------------------------------------------------------------------------
-section "Step 8/9" "Pacman UI"
+section "Step 7/8" "Pacman UI"
 
 if grep -q "^ILoveCandy" /etc/pacman.conf; then
     success "Pacman candy progress bar is already enabled."
@@ -206,9 +173,9 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# 9. Flatpak
+# 8. Flatpak
 # ------------------------------------------------------------------------------
-section "Step 9/9" "Flatpak"
+section "Step 8/8" "Flatpak"
 
 exe pacman -S --noconfirm --needed flatpak
 exe flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -226,4 +193,4 @@ else
     log "Using Global Sources."
 fi
 
-log "Module 02 completed."
+log "Module 02b completed."
