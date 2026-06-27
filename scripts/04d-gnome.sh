@@ -98,6 +98,9 @@ sudo -u "$TARGET_USER" bash <<EOF
 
     gsettings set org.gnome.desktop.default-applications.terminal exec 'ghostty'
     gsettings set org.gnome.desktop.default-applications.terminal exec-arg '-e'
+    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal custom
+    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal custom-local-command 'ghostty --working-directory=%s'
+    gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gtk/IMModule':<'fcitx'>}"
 EOF
 
 #=================================================
@@ -325,21 +328,10 @@ exe chmod 755 "$POL_DIR" && exe chmod 644 "$POL_DIR/policies.json"
 log "Firefox policies updated."
 
 #=================================================
-# Nautilus Fix & Input Method
+# Nautilus Fix
 #=================================================
 configure_nautilus_user
 
-section "Step 6" "Input method"
-log "Configure input method environment..."
-if ! grep -q "fcitx" "/etc/environment" 2>/dev/null; then
-    cat << EOT >> /etc/environment
-XIM="fcitx"
-GTK_IM_MODULE=fcitx
-QT_IM_MODULE=fcitx
-XMODIFIERS=@im=fcitx
-XDG_CURRENT_DESKTOP=GNOME
-EOT
-fi
 
 #=================================================
 # Dotfiles

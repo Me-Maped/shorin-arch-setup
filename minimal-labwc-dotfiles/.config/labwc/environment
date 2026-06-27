@@ -5,6 +5,7 @@ QT_QPA_PLATFORMTHEME=gtk3
 
 LANG=zh_CN.UTF-8
 XMODIFIERS=@im=fcitx
+QT_IM_MODULES="wayland;fcitx"
 
 XCURSOR_THEME=breeze_cursors
 XCURSOR_SIZE=30
