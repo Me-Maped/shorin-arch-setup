@@ -47,7 +47,7 @@ AUR_HELPER="paru"
 section "Shorin Noctalia" "Core Components"
 log "Installing core shell components..."
 
-CORE_PKGS="noctalia-shell niri xwayland-satellite kitty xdg-desktop-portal-gnome niri-sidebar-git satty mpv polkit-gnome "
+CORE_PKGS="noctalia-shell niri xwayland-satellite kitty xdg-desktop-portal-gnome niri-sidebar-git satty mpv polkit-gnome qt5-wayland qt6-wayland"
 
 echo "$CORE_PKGS" >> "$VERIFY_LIST"
 exe as_user "$AUR_HELPER" -S --noconfirm --needed $CORE_PKGS

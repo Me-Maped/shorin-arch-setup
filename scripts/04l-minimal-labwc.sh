@@ -70,7 +70,7 @@ fi
 
 # --- 4. Core Components ---
 section "Minimal Labwc" "Core Components"
-LABWC_PKGS=(labwc xdg-desktop-portal-wlr fuzzel waybar mako swaybg waypaper polkit-gnome wlr-randr)
+LABWC_PKGS=(labwc xdg-desktop-portal-wlr fuzzel waybar mako swaybg waypaper polkit-gnome wlr-randr qt5-wayland qt6-wayland)
 echo "${LABWC_PKGS[*]}" >> "$VERIFY_LIST"
 exe as_user "$AUR_HELPER" -S --noconfirm --needed "${LABWC_PKGS[@]}"
 
