@@ -425,6 +425,7 @@ section "Config" "Hiding useless .desktop files"
 log "Hiding useless .desktop files"
 run_hide_desktop_file
 as_user shorin link
+as_user miyu fish-init 
 # ------------------------------------------------------------------------------
 # Cleanup
 # ------------------------------------------------------------------------------
